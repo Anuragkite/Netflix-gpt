@@ -3,7 +3,7 @@ import Header from "./Header";
 import { CheckValidData } from "../utils/Validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"; //for firebase
 import { auth } from "../utils/firebase"; //made a global firebase auth in firebase.js so we can call it anywhere in the project
-import { useDispatch } from "react-redux";
+
 import { addUsers } from "../utils/userSlice";
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
@@ -12,7 +12,6 @@ const Login = () => {
   const email = useRef();
   const password = useRef();
   const name = useRef();
-  const dispatch = useDispatch(); 
 
 
   const ToggleSignInForm = () => {
@@ -43,9 +42,7 @@ const Login = () => {
             // Signed up
             const user = userCredential.user;
             console.log(user);
-            dispatch(addUsers({email : emailValue,
-              password : passwordValue
-            }));
+         
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -59,10 +56,7 @@ const Login = () => {
             // Signed in
             const user = userCredential.user;
             console.log(user);
-            dispatch(addUsers({email : emailValue,
-              password : passwordValue
-            }));
-
+           
           })
           .catch((error) => {
             const errorCode = error.code;
