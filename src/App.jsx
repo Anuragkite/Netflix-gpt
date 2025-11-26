@@ -1,12 +1,13 @@
-
-import Body from "./Components/Body.jsx"
+import Body from "./Components/Body.jsx";
+import { Provider } from "react-redux";
+import ReduxStore from "./utils/ReduxStore.js";
 
 function App() {
-  
-
   return (
-    <Body/>
-  )
+    <Provider store={ReduxStore}>
+      <Body />
+    </Provider>
+  );
 }
 
-export default App
+export default App;

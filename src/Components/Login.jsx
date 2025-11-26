@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { CheckValidData } from "../utils/Validate";
-
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"; //for firebase
+import { auth } from "../utils/firebase"; //made a global firebase auth in firebase.js so we can call it anywhere in the project
+import { useDispatch } from "react-redux";
+import { addUsers } from "../utils/userSlice";
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -9,30 +12,64 @@ const Login = () => {
   const email = useRef();
   const password = useRef();
   const name = useRef();
+  const dispatch = useDispatch(); 
+
 
   const ToggleSignInForm = () => {
     setSignInForm(!isSignInForm);
   };
 
   const handleButtonClick = () => {
-
-
     const emailValue = email.current.value;
     const passwordValue = password.current.value;
-    let  nameValue = null ;
+    let nameValue = null;
 
-    if(!isSignInForm){
+    if (!isSignInForm) {
       nameValue = name.current.value;
     }
 
-
-   
     // validate
-    const message = CheckValidData(emailValue, passwordValue,nameValue);
+    const message = CheckValidData(emailValue, passwordValue, nameValue);
     setErrorMessage(message);
 
-    if (!message) {
-      console.log("Form submitted successfully!");
+    if (message === null) {
+      // Sign In / Sign Up logic
+      console.log("successfully login !");
+
+      if (!isSignInForm) {
+        // login for sign Up form
+        createUserWithEmailAndPassword(auth, emailValue, passwordValue)
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            console.log(user);
+            dispatch(addUsers({email : emailValue,
+              password : passwordValue
+            }));
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          setErrorMessage(errorMessage + errorCode);
+          });
+      } else {
+        // logic for sign In form
+        signInWithEmailAndPassword(auth, emailValue, passwordValue)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            dispatch(addUsers({email : emailValue,
+              password : passwordValue
+            }));
+
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorMessage + errorCode);
+          });
+      }
     }
   };
 
@@ -60,7 +97,7 @@ const Login = () => {
 
         {!isSignInForm && (
           <input
-          ref={name}
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="my-3 p-4 rounded-xl bg-gray-700"
