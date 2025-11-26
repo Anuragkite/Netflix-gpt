@@ -1,13 +1,5 @@
 {
   "projects": {
     "default": "netflixgpt-9d750"
-  },
-  "targets": {
-    "netflixgpt-9d750": {
-      "hosting": {
-        "default": ["netflixgpt-9d750"]
-      }
-    }
   }
 }
-
