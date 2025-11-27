@@ -1,18 +1,21 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { CheckValidData } from "../utils/Validate";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"; //for firebase
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth"; //for firebase
 import { auth } from "../utils/firebase"; //made a global firebase auth in firebase.js so we can call it anywhere in the project
 
 import { addUsers } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const navigate = useNavigate();
   const email = useRef();
   const password = useRef();
   const name = useRef();
-
 
   const ToggleSignInForm = () => {
     setSignInForm(!isSignInForm);
@@ -42,12 +45,12 @@ const Login = () => {
             // Signed up
             const user = userCredential.user;
             console.log(user);
-         
+            navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-          setErrorMessage(errorMessage + errorCode);
+            setErrorMessage(errorMessage + errorCode);
           });
       } else {
         // logic for sign In form
@@ -56,7 +59,7 @@ const Login = () => {
             // Signed in
             const user = userCredential.user;
             console.log(user);
-           
+            navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
