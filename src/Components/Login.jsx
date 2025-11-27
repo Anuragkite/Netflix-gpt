@@ -4,11 +4,13 @@ import { CheckValidData } from "../utils/Validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth"; //for firebase
 import { auth } from "../utils/firebase"; //made a global firebase auth in firebase.js so we can call it anywhere in the project
 
 import { addUsers } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -16,7 +18,7 @@ const Login = () => {
   const email = useRef();
   const password = useRef();
   const name = useRef();
-
+const dispatch = useDispatch();
   const ToggleSignInForm = () => {
     setSignInForm(!isSignInForm);
   };
@@ -44,8 +46,25 @@ const Login = () => {
           .then((userCredential) => {
             // Signed up
             const user = userCredential.user;
-            console.log(user);
-            navigate("/browse");
+
+            // adding the update profile logic
+
+            updateProfile(user, {
+              displayName: name.current.value,
+              photoURL: "https://example.com/jane-q-user/profile.jpg",
+            })
+              .then(() => {
+                const {email,uid,displayName,photoURL} = auth.currentUser;
+                dispatch(
+                  addUsers({email: email, uid: uid, displayName: displayName ,photoURL:photoURL})
+                )
+                console.log(user);
+                navigate("/browse");
+              })
+              .catch((error) => {
+                // An error occurred
+                console.log(error);
+              });
           })
           .catch((error) => {
             const errorCode = error.code;
