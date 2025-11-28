@@ -9,16 +9,16 @@ import {
 import { auth } from "../utils/firebase"; //made a global firebase auth in firebase.js so we can call it anywhere in the project
 
 import { addUsers } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
+
   const email = useRef();
   const password = useRef();
   const name = useRef();
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const ToggleSignInForm = () => {
     setSignInForm(!isSignInForm);
   };
@@ -46,20 +46,25 @@ const dispatch = useDispatch();
           .then((userCredential) => {
             // Signed up
             const user = userCredential.user;
-
+            const photoURL =
+              "https://avatars.githubusercontent.com/u/175675416?v=4";
             // adding the update profile logic
 
             updateProfile(user, {
-              displayName: name.current.value,
-              photoURL: "https://example.com/jane-q-user/profile.jpg",
+              displayName: nameValue,
+              photoURL: "https://avatars.githubusercontent.com/u/175675416?v=4",
             })
               .then(() => {
-                const {email,uid,displayName,photoURL} = auth.currentUser;
                 dispatch(
-                  addUsers({email: email, uid: uid, displayName: displayName ,photoURL:photoURL})
-                )
+                  addUsers({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: nameValue, // Pass the variable, not the ref
+                    photoURL: photoURL, // Pass the variable
+                  })
+                );
+
                 console.log(user);
-                navigate("/browse");
               })
               .catch((error) => {
                 // An error occurred
@@ -78,7 +83,7 @@ const dispatch = useDispatch();
             // Signed in
             const user = userCredential.user;
             console.log(user);
-            navigate("/browse");
+            
           })
           .catch((error) => {
             const errorCode = error.code;
