@@ -53,7 +53,7 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute w-full h-24 bg-gradient-to-b from-black to-transparent z-10 flex  justify-between">
+    <div className="absolute w-full h-24 bg-gradient-to-b from-black to-transparent z-50 flex  justify-between">
       {/* <img
         id="app Logo"
         src={app_LOGO}

@@ -1,31 +1,27 @@
 import React from "react";
-import { useSelector } from "react-redux"; 
+import { useSelector } from "react-redux";
 import useTrailerVideo from "../Hooks/useTrailerVideo";
 
 const VideoBg = ({ movieId }) => {
-  // 1. Fetch Data: Call the custom hook with the movieId
-  // This runs the API call and updates the Redux store
+  // Fetch the trailer into the store
   useTrailerVideo(movieId);
 
-  // 2. Read Data: Subscribe to the store
+  // Read the key from redux
   const trailerVideoKey = useSelector((store) => store.movie?.trailerVideo?.key);
 
-  // 3. Early Return: If Redux doesn't have the key yet, render nothing
+  // If no trailer yet, render nothing
   if (!trailerVideoKey) return null;
 
+  // Place the video as a fixed, full-viewport background behind other UI
   return (
-    <div className="w-screen">
+    <div className="fixed inset-0 -z-10">
       <iframe
-        className="w-screen aspect-video"
-        src={
-          "https://www.youtube.com/embed/" +
-          trailerVideoKey +
-          "?si=GtM5djOQHCXqQwu2&autoplay=1&mute=1"
-        }
+        className="w-full h-full"
+        src={`https://www.youtube.com/embed/${trailerVideoKey}?mute=1&autoplay=1&loop=1&playlist=${trailerVideoKey}`}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-       
-      ></iframe>
+        allowFullScreen
+      />
     </div>
   );
 };
