@@ -14,7 +14,7 @@ const useNowPlayingMovies = ()=>{
     const data = await fetch(URL, API_OPTIONS);
     const MovieData = await data.json();
     dispatch(addNowPlayingMovies(MovieData.results));
-    console.log("The Tmdb Live Movies Data : ", MovieData.results);
+    // console.log("The Tmdb Live Movies Data : ", MovieData.results);
   };
 
   useEffect(() => {
