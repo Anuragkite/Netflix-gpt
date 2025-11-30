@@ -13,7 +13,7 @@ const MainContainer = () => {
  } = mainMovie;
 
   return (
-    <div>
+    <div className='relative h-[90vh] w-screen'>
         <VideoTitle title = {original_title} overview={overview}/>
         <VideoBg movieId = {id}/>
     </div>

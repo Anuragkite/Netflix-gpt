@@ -32,7 +32,7 @@ const Header = () => {
       } else {
         // User is signed out
         dispatch(removeUsers());
-        navigate("/");
+        // navigate("/");
       }
     });
     // unsubscribing  when component is unmountes
