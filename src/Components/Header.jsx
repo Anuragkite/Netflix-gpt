@@ -4,13 +4,20 @@ import { auth } from "../utils/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUsers, removeUsers } from "../utils/userSlice";
-import {  ProfilePictures } from "../utils/constants";
+import { ProfilePictures } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/GptSlice";
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const profileUrl = useSelector((reduxStore) => reduxStore?.user?.photoURL);
 
   const dispatch = useDispatch();
+
+ const handleGptSearchBtn =()=>{
+    
+dispatch(toggleGptSearchView())
+
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -64,7 +71,13 @@ const Header = () => {
         MovieGPT
       </h1>
       {location.pathname === "/browse" ? (
-        <div className="p-3 w-45 h-20 m-3 flex justify-evenly ">
+        
+        <div className="p-3 w-70 h-20 m-3 flex     ">
+        <div className="flex justify-evenly">
+          <button className="bg-purple-600 w-45 mr-4 rounded-lg text-white font-bold p-3"
+          onClick={handleGptSearchBtn}
+          >GPT Search</button>
+        
           <img
             className="w-12 h-12"
             src={profileUrl ? profileUrl : ProfilePictures}
@@ -72,6 +85,7 @@ const Header = () => {
           <button onClick={handleSignOut} className="font-bold text-white ">
             (Sign Out)
           </button>
+        </div>
         </div>
       ) : (
         <></>

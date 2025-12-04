@@ -11,6 +11,7 @@ import { auth } from "../utils/firebase"; //made a global firebase auth in fireb
 import { addUsers } from "../utils/userSlice";
 
 import { useDispatch } from "react-redux";
+import { BackGroundImageURL } from "../utils/constants";
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -101,7 +102,7 @@ const Login = () => {
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <img
-          src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop"
+          src={BackGroundImageURL}
           className="w-full h-full object-cover"
           alt="bg"
         />
