@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "netflixgpt-9d750"
-  }
+    "default": "moviesgpt-20ab7"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -1,7 +1,12 @@
 import React from "react";
 import { BackGroundImageURL } from "../utils/constants";
+import lang from "../utils/languageConstants";
+import { useSelector } from "react-redux";
 
 const GptSearchBar = () => {
+
+const currentLanguage = useSelector((store)=> store.config.lang);
+
   return (
     <div className="pt-[10%] flex justify-center">
       <div className="absolute inset-0 -z-10">
@@ -16,14 +21,14 @@ const GptSearchBar = () => {
         <input
           type="text"
           className="col-span-9 rounded-lg px-3 my-4 border black  bg-white fl"
-          placeholder="On Which Adventure You Wanna Go Today ! "
+          placeholder={lang[currentLanguage].gptSearchPlaceholder}
         ></input>
         <button
           className=" col-span-3 bg-red-600 text-white rounded-lg my-4 py-4 mx-4 font-semibold text-2xl 
          "
         >
           {" "}
-          Search{" "}
+         {lang[currentLanguage].search }{" "}
         </button>
       </form>
     </div>
