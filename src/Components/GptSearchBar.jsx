@@ -74,7 +74,7 @@ Rules:
 
   return (
     <div className="pt-[10%] flex justify-center">
-      <div className="absolute inset-0 -z-10">
+      <div className="fixed inset-0 -z-10">
         <img
           src={BackGroundImageURL}
           className="w-full h-full object-cover"
