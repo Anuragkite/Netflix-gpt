@@ -1,7 +1,7 @@
 import React from 'react'
 import { TMDB_POSTER_CDN_URL } from '../utils/constants'
 const MovieCart = ({posterPath,movieTitle}) => {
-    console.log("title of the movie:",movieTitle);
+  
   return (
     <div>
         <div className='mx-4 w-[150px] mb-19 '>

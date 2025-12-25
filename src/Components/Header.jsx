@@ -11,14 +11,12 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const profileUrl = useSelector((reduxStore) => reduxStore?.user?.photoURL);
-
+  const GptSearchPage = useSelector(store =>store.gpt.showGptSearch  )
   const dispatch = useDispatch();
 
- const handleGptSearchBtn =()=>{
-    
-dispatch(toggleGptSearchView())
-
-  }
+  const handleGptSearchBtn = () => {
+    dispatch(toggleGptSearchView());
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -36,12 +34,13 @@ dispatch(toggleGptSearchView())
             photoURL: photoURL,
           })
         );
-        if(location.pathname === '/')
-        {navigate("/browse");}
+        if (location.pathname === "/") {
+          navigate("/browse");
+        }
       } else {
         // User is signed out
         dispatch(removeUsers());
-         navigate("/");
+        navigate("/");
       }
     });
     // unsubscribing  when component is unmountes
@@ -61,12 +60,9 @@ dispatch(toggleGptSearchView())
       });
   };
 
-const HandleLanguageChange =(e)=>{
-
-dispatch(changeLanguage(e.target.value));
-}
-
-
+  const HandleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
 
   return (
     <div className="absolute w-full h-24 bg-gradient-to-b from-black to-transparent z-50 flex  justify-between">
@@ -80,30 +76,33 @@ dispatch(changeLanguage(e.target.value));
         MovieGPT
       </h1>
       {location.pathname === "/browse" ? (
-        
         <div className="p-3 w-70 h-20 m-3 flex     ">
-        <div className="text-white mr-5 mt-4 ">
-        <select className="bg-gray-800"  onChange={HandleLanguageChange}>
-          {SUPPORTED_LANGUAGES.map((lang)=>
-          <option  key={lang.identifier} value={lang.identifier}> {lang.name}  </option>
-          )}
-        </select>
+          <div className="text-white mr-5 mt-4 ">
+            { GptSearchPage &&  <select className="bg-gray-800" onChange={HandleLanguageChange}>
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {" "}
+                  {lang.name}{" "}
+                </option>
+              ))}
+            </select>}
+          </div>
+          <div className="flex justify-evenly">
+            <button
+              className="bg-purple-600 w-45 mr-4 rounded-lg text-white font-bold p-3"
+              onClick={handleGptSearchBtn}
+            >
+              GPT Search
+            </button>
 
-        </div>
-        <div className="flex justify-evenly">
-          
-          <button className="bg-purple-600 w-45 mr-4 rounded-lg text-white font-bold p-3"
-          onClick={handleGptSearchBtn}
-          >GPT Search</button>
-        
-          <img
-            className="w-12 h-12"
-            src={profileUrl ? profileUrl : ProfilePictures}
-          />
-          <button onClick={handleSignOut} className="font-bold text-white ">
-            (Sign Out)
-          </button>
-        </div>
+            <img
+              className="w-12 h-12"
+              src={profileUrl ? profileUrl : ProfilePictures}
+            />
+            <button onClick={handleSignOut} className="font-bold text-white ">
+              (Sign Out)
+            </button>
+          </div>
         </div>
       ) : (
         <></>

@@ -5,11 +5,11 @@ const MovieList = ({ title, movie }) => {
   if (!movie) return null;
 
   return (
-    <div className="-mt-40 relative  p-2">
-      <h1 className="text-lg md:text-3xl py-4 text-white font-bold">{title}</h1>
+    <div className="-mt-32 relative  p-2 my-10">
+      <h1 className="text-lg md:text-3xl py-10 text-white font-bold">{title}</h1>
 
       <div
-        className="flex overflow-x-scroll overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden space-x-4"
+        className="flex overflow-x-scroll overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden "
         onWheel={(e) => {
           e.preventDefault();
           e.currentTarget.scrollLeft += e.deltaY;

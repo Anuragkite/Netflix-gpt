@@ -14,7 +14,7 @@ reducers:{
 
         state.lang = action.payload;
     }
-}
+} 
 
 })
 

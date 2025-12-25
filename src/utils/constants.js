@@ -2,6 +2,7 @@ export const BackGroundImageURL =
   "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop";
 export const ProfilePictures =
   "https://i.pinimg.com/736x/72/84/57/7284572aec920044b28338a777a4f81e.jpg";
+  // TMDB api options
 export const API_OPTIONS = {
   method: "GET",
   headers: {
@@ -20,3 +21,6 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "spanish", name: "Spanish" },
 ];
   
+
+// export const GEMINI_KEYS="AIzaSyAL101QqK23Blx0BAktxMbhuFhcm8WYCw8";
+export const GEMINI_KEYS = "AIzaSyBNg9cp-mM77kUzpBUsdl5buzUsbX1-Sdo"
