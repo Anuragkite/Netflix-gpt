@@ -25,3 +25,4 @@ dist-ssr
 firebase.js
 src/utils/firebase.js
 src/utils/openAi.js
+src/utils/constants.js
